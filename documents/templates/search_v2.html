@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DocFind V2</title>
+        <style>
+            body { font-family: sans-serif; margin: 2rem; }
+            input[type="text"] { width: 80%; padding: 8px; }
+            input[type="submit"] { padding: 8px 16px; }
+            .result { margin-top: 2rem; border-bottom: 1px solid #ccc; padding: 1rem 0; }
+            .score { color: gray; font-size: 0.9rem; }
+        </style>
+    </head>
+    <body>
+        <h1>DocFind V2</h1>
+        <form method="GET">
+            <input type="text" name="q" placeholder="Enter your search..." required value="{{ request.GET.q }}">
+            <input type="submit" value="Search">
+        </form>
+
+        {% if results %}
+            <h2>Results:</h2>
+            {% for result in results %}
+                <div class="result">
+                    <h3>{{ result.title }}</h3>
+                    <p class="score"><p class="score">Pinecone Score: {{ result.score|floatformat:3 }} | Cohere Rerank Score: {{ result.cohere_score|floatformat:3 }}</p></p>
+                    <p>{{ result.snippet }}</p>
+
+                    <p>
+                        <a href="{{ result.download_url }}" target="_blank" style="color: #007bff; text-decoration: none;">
+                        Download Document
+                        </a>
+                    </p>
+                </div>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
