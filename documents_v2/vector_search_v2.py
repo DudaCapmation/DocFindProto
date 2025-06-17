@@ -45,7 +45,7 @@ def search_documents(query_text: str, top_k: int = 20, max_docs: int = 5):
             }
 
     # Sorting by best match score (descending)
-    top_documents = sorted(doc_chunks.values(), key=lambda x: x["score"], reverse=True)
+    top_documents = sorted(doc_chunks.values(), key=lambda x: x["semantic_score"], reverse=True)
 
     #Cohere rerank
     rerank_inputs = [doc["snippet"] for doc in top_documents]
