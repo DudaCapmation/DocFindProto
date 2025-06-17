@@ -41,7 +41,7 @@ def search_documents(query_text: str, top_k: int = 20, max_docs: int = 5):
                 "doc_id": doc_id,
                 "title": title,
                 "snippet": snippet,
-                "score": score
+                "semantic_score": score
             }
 
     # Sorting by best match score (descending)
@@ -61,7 +61,7 @@ def search_documents(query_text: str, top_k: int = 20, max_docs: int = 5):
     for result in rerank_response.results:
         rerank_sorted_results.append({
             **top_documents[result.index],
-            "cohere_score": result.relevance_score
+            "rerank_score": result.relevance_score
         })
 
     # Returning top N documents
