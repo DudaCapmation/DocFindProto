@@ -32,7 +32,7 @@ def azure_create_or_update(request):
     try:
         blob_client = get_blob_client_headers(request)
         file = request.body
-        blob_client.upload_blob(file.read(), overwrite=True)
+        blob_client.upload_blob(file, overwrite=True)
 
         return Response({"message": "Upload successful"}, status=status.HTTP_201_CREATED)
 
