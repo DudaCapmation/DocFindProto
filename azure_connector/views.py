@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view, parser_classes
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
 from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
 from datetime import datetime, timedelta
 
@@ -64,9 +63,12 @@ def azure_get(request):
         blob_name = request.data["blob_name"]
 
         blob_client = get_blob_client(connection_string, container_name, blob_name)
-        content = blob_client.download_blob().readall().decode('utf-8')
+        content = blob_client.download_blob().readall()
 
-        return Response({"content": content}, status=status.HTTP_200_OK)
+        response = HttpResponse(content, content_type="application/octet-stream")
+        response['Content-Disposition'] = f'attachment; filename="{blob_name}"'
+
+        return response
 
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
