@@ -81,7 +81,9 @@ def azure_get_url(request):
             container_name = request.data["container_name"]
             blob_name = request.data["blob_name"]
 
-            blob_client = BlobServiceClient.from_connection_string(connection_string)
+            blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+            blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+
             sas_token = generate_blob_sas(
                 account_name=blob_client.account_name,
                 container_name=container_name,

@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("documents/", include("documents.urls")),
+    path('documents/', include('documents.urls')),
     path('api/azure/', include('azure_connector.urls')),
+    path('api/chunking/', include('chunking_integration.urls')),
 ]

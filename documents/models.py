@@ -3,7 +3,7 @@ from .azure_utils import upload_blob, generate_blob_url
 from .chunking_utils import chunk_text
 from .embedding_utils import get_embeddings
 from .pinecone_setup import index
-from .ocr_utils import extract_text_from_document_url
+from chunking_integration.ocr_utils import extract_text_from_document_url
 import uuid
 
 # Create your models here.
